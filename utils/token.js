@@ -3,7 +3,8 @@ const config = require("../common/config");
 const { expressjwt: expressJwt} = require("express-jwt")
 const blackList = [
   "/api/users/login",
-  "/api/users/signup"
+  "/api/users/signup",
+  "/public/**/*"
 ]
 
 

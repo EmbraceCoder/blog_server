@@ -3,7 +3,8 @@ const {encrypt, decrypt} = require("../utils/cipherCode");
 const {db} = require("../common/sql");
 const { check, validationResult } = require("express-validator")
 const {generateToken} = require("../utils/token");
-
+const fs = require("fs")
+const formidable = require("formidable");
 
 // 用户注册
 const signup = async (req, res, next) => {
@@ -164,7 +165,37 @@ const getUsr = (req, res) => {
   })
 }
 
-
+// 用户头像上传
+const uploadUserAvatar = (req, res) => {
+  const userInfo = req.auth;
+  const form = new formidable.IncomingForm();
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      res.send({
+        status: 400,
+        message: "上传头像失败"
+      })
+    }
+    const user_id = parseInt(userInfo.uid);
+    const fullFileName = userInfo.userName + user_id + files.file.originalFilename;// 拼接图片名称：用户名+用户ID+图片名称
+    fs.writeFileSync(`public/images/${fullFileName}`, fs.readFileSync(files.file.filepath)); // 存储图片到public静态资源文件夹下
+    const updateUserAvatar = `UPDATE sys_user SET avatar = ? WHERE id = ?`
+    RunSQL(updateUserAvatar, [fullFileName, user_id]).then((result) => {
+      res.send({
+        status: 200,
+        data: {
+          avatar: `/public/images/${fullFileName}`
+        },
+        message: "上传用户头像成功"
+      })
+    }).then(err => {
+      res.send({
+        status: 400,
+        message: "上传用户头像失败"
+      })
+    })
+  })
+}
 
 
 
@@ -175,4 +206,5 @@ module.exports = {
   deleteUsr,
   updateUsr,
   getUsr,
+  uploadUserAvatar
 }
