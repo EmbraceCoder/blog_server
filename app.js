@@ -17,6 +17,10 @@ app.use(cors({
   "credentials": true,
   "methods": "GET,POST,PUT,PATCH,DELETE"
 }))
+
+// 暴露静态资源
+app.use("/public", express.static("public"))
+
 app.use(jwtAuth);
 app.use(logger('combined', { stream: accessLogStream }));
 app.use(express.json());

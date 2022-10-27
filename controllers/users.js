@@ -103,11 +103,6 @@ const login = async (req, res, next) => {
 
 }
 
-// 测试TOKEN解析
-const testTokenParser = (req, res) => {
-  res.send(req.auth)
-}
-
 // 删除用户
 const deleteUsr = (req, res) => {
   const { id } = req.query
@@ -169,10 +164,7 @@ const getUsr = (req, res) => {
   })
 }
 
-// 用户头像上传
-const uploadUserAvatar = (req, res) => {
 
-}
 
 
 
@@ -180,12 +172,7 @@ const uploadUserAvatar = (req, res) => {
 module.exports = {
   signup,
   login,
-  testTokenParser,
   deleteUsr,
   updateUsr,
-  getUsr
+  getUsr,
 }
-//
-// exports.signup = signup;
-// exports.login = login;
-// exports.test = test;
