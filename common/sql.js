@@ -1,6 +1,6 @@
 const mysql = require('mysql');   //引入了新的npm第三方包，在此之前先执行npm install mysql or yarn add mysql
 
-const configObj = require('./config')
+const configObj = require('./config').mysql
 
 const db = mysql.createConnection({
   ...configObj

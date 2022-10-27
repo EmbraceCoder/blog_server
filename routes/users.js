@@ -1,7 +1,11 @@
-var express = require('express');
-var router = express.Router();
-const userCtl = require("../controllers/user")
+const express = require('express');
+const Router = express.Router();
+const userCtl = require("../controllers/users")
+Router.post('/signup', userCtl.signup)
+Router.post("/login", userCtl.login)
+Router.get("/testTokenParser", userCtl.testTokenParser)
+Router.delete("/", userCtl.deleteUsr)
+Router.put('/', userCtl.updateUsr)
+Router.get('/', userCtl.getUsr)
 
-router.post('/signup', userCtl.signup)
-
-module.exports = router;
+module.exports = Router;

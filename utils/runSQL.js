@@ -1,8 +1,8 @@
 const {db} = require("../common/sql");
 
-async function RunSQL(sql) {
+async function RunSQL(sql, params) {
   return new Promise((resolve, reject) => {
-    db.query(sql, (err, result) => {
+    db.query(sql, params, (err, result) => {
       if (err) reject(err);
       resolve(result)
     })
